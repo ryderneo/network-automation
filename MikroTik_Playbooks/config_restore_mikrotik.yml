@@ -1,0 +1,23 @@
+- name: Restore config to all Mikrotik RouterOS devices
+  hosts: mikrotik
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: copy config to router
+      command: sshpass -p '{{ansible_password}}' scp ./backup/{{inventory_hostname}}.rsc  {{ansible_user}}@{{inventory_hostname}}:/{{inventory_hostname}}.rsc
+    - name: set up the resotre script
+      routeros_command:
+           commands: 
+                - /system scheduler add disabled=yes interval=30s name=config_restore on-event="/system scheduler disable config_restore;system reset-configuration keep-users=yes no-defaults=yes run-after-reset=M1.rsc skip-backup=yes;" policy=reboot,read,write,policy,test,password,sniff,sensitive start-date=jan/01/1970 start-time=00:00:00
+    - name: activate restore
+      routeros_command:
+           commands: system scheduler enable config_restore
+    - name: Wait for the router to boot
+      wait_for: 
+       host: "{{ inventory_hostname }}"
+       port: 22
+      delegate_to: localhost
+    - name: clear rsc file
+      routeros_command:
+           commands: file remove M1.rsc

@@ -1,0 +1,22 @@
+- name: Get config from all Mikrotik RouterOS devices
+  hosts: mikrotik
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: Generate RSC backup by {{ inventory_hostname }}
+      routeros_command:
+        commands: export file={{ inventory_hostname }}
+    - name: Generate backup by {{ inventory_hostname }}
+      routeros_command:
+        commands: system backup save name={{ inventory_hostname }}
+    - name: Collect Config.rsc From Router to Engine
+      command: sshpass -p 'ana12345' scp ana@192.168.56.113:/{{inventory_hostname}}.rsc ./backup/{{inventory_hostname}}.rsc
+    - name: Collect Config.backup From Router to Engine
+      command: sshpass -p 'ana12345' scp ana@192.168.56.113:/{{inventory_hostname}}.backup ./backup/{{inventory_hostname}}.backup
+    - name: Remove the local rsc backup file generated
+      routeros_command:
+        commands: file remove {{ inventory_hostname }}.rsc
+    - name: Remove the local  backup file generated
+      routeros_command:
+        commands: file remove {{ inventory_hostname }}.backup

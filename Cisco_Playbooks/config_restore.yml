@@ -1,0 +1,12 @@
+---
+- name: RESTORE CONFIGURATION
+  hosts: ios
+  gather_facts: no
+
+  tasks:
+    - name: COPY RUNNING CONFIG TO ROUTER
+      command: sshpass -p '{{ansible_password}}' scp ./backup/{{inventory_hostname}}.config {{ansible_user}}@{{inventory_hostname}}:/{{inventory_hostname}}.config
+    - name: CONFIG REPLACE
+      ios_command:
+        commands:
+          - config replace flash:{{inventory_hostname}}.config force
