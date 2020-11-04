@@ -1,0 +1,13 @@
+- name: Fully Sync changes into git_repo
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Fully Sync Changes into git_repo
+      command: "{{ item }}"
+      with_items:
+       - pwd
+       - git add .
+       - git commit -m "Updates just now" -a
+       - git push orign
+      args:
+       chdir: ./git_remote
