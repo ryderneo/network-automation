@@ -1,0 +1,12 @@
+- name: Get config from all Mikrotik RouterOS devices
+  hosts: mikrotik
+  connection: network_cli
+  gather_facts: no
+
+  tasks:
+    - name: copy config to router
+      command: sshpass -p '{{ansible_password}}' scp ./backup/{{inventory_hostname}}.rsc  {{ansible_user}}@{{inventory_hostname}}:/{{inventory_hostname}}.rsc
+    - name: execute router backup
+      routeros_command:
+        commands: /system script add name=ResetCfg source=\"if ([:len [/file find name={{inventory_hostname}}.rsc]] > 0) do={/system reset-configuration keep-users=no no-defaults=yes skip-backup=yes run-after-reset={{inventory_hostname.rsc}\"
+
