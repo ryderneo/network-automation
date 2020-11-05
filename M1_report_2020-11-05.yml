@@ -1,0 +1,35 @@
+Hostname: MikroTik
+
+
+Model: 
+
+
+Serial Number: 
+
+
+IOS Version: 6.47.7 (stable)
+
+
+Interfaces: {u'ether4': {u'name': u'ether4', u'link-downs': u'0', u'default-name': u'ether4', u'actual-mtu': u'1500', u'last-link-up-time': u'nov/05/2020 03:17:47', u'mtu': u'1500', u'type': u'ether', u'mac-address': u'0C:B4:F7:BB:0B:03'}, u'ether2': {u'name': u'ether2', u'link-downs': u'0', u'default-name': u'ether2', u'actual-mtu': u'1500', u'last-link-up-time': u'nov/05/2020 03:17:44', u'mtu': u'1500', u'type': u'ether', u'mac-address': u'0C:B4:F7:BB:0B:01'}, u'ether3': {u'name': u'ether3', u'link-downs': u'0', u'default-name': u'ether3', u'actual-mtu': u'1500', u'last-link-up-time': u'nov/05/2020 03:17:46', u'mtu': u'1500', u'type': u'ether', u'mac-address': u'0C:B4:F7:BB:0B:02'}, u'ether1': {u'name': u'ether1', u'link-downs': u'0', u'default-name': u'ether1', u'actual-mtu': u'1500', u'last-link-up-time': u'nov/05/2020 03:17:43', u'ipv4': [{u'subnet': u'24', u'address': u'192.168.56.113'}], u'mtu': u'1500', u'type': u'ether', u'mac-address': u'0C:B4:F7:BB:0B:00'}}
+
+
+CDP Neighbors:
+{u'ether1': {u'interface-name': u'GigabitEthernet0/0', u'age': u'19s', u'address4': u'192.168.56.110', u'platform': u'Cisco', u'version': u'Cisco', u'address': u'192.168.56.110', u'interface': u'ether1', u'unpack': u'none', u'mac-address': u'0C:B4:F7:E7:50:00', u'identity': u'R2.r2.local'}}
+
+
+Running Configuration:
+# nov/05/2020 03:53:35 by RouterOS 6.47.7
+# software id = 
+#
+#
+#
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/ip dhcp-client
+add disabled=no interface=ether1
+/system scheduler
+add disabled=yes interval=30s name=config_restore on-event="/system scheduler \
+    disable config_restore;system reset-configuration keep-users=yes no-defaul\
+    ts=yes run-after-reset=M1.rsc skip-backup=yes;" policy=\
+    reboot,read,write,policy,test,password,sniff,sensitive start-date=\
+    jan/01/1970 start-time=00:00:00
