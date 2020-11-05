@@ -14,7 +14,7 @@ Interfaces: {
                 "subnet": "24"
             }
         ],
-        "last-link-up-time": "nov/05/2020 03:17:43",
+        "last-link-up-time": "nov/05/2020 21:19:17",
         "link-downs": "0",
         "mac-address": "0C:B4:F7:BB:0B:00",
         "mtu": "1500",
@@ -24,7 +24,7 @@ Interfaces: {
     "ether2": {
         "actual-mtu": "1500",
         "default-name": "ether2",
-        "last-link-up-time": "nov/05/2020 03:17:44",
+        "last-link-up-time": "nov/05/2020 21:19:19",
         "link-downs": "0",
         "mac-address": "0C:B4:F7:BB:0B:01",
         "mtu": "1500",
@@ -34,7 +34,7 @@ Interfaces: {
     "ether3": {
         "actual-mtu": "1500",
         "default-name": "ether3",
-        "last-link-up-time": "nov/05/2020 03:17:46",
+        "last-link-up-time": "nov/05/2020 21:19:21",
         "link-downs": "0",
         "mac-address": "0C:B4:F7:BB:0B:02",
         "mtu": "1500",
@@ -44,7 +44,7 @@ Interfaces: {
     "ether4": {
         "actual-mtu": "1500",
         "default-name": "ether4",
-        "last-link-up-time": "nov/05/2020 03:17:47",
+        "last-link-up-time": "nov/05/2020 21:19:22",
         "link-downs": "0",
         "mac-address": "0C:B4:F7:BB:0B:03",
         "mtu": "1500",
@@ -55,11 +55,24 @@ Interfaces: {
 
 
 CDP Neighbors:
-{u'ether1': {u'interface-name': u'GigabitEthernet0/0', u'age': u'40s', u'address4': u'192.168.56.110', u'platform': u'Cisco', u'version': u'Cisco', u'address': u'192.168.56.110', u'interface': u'ether1', u'unpack': u'none', u'mac-address': u'0C:B4:F7:E7:50:00', u'identity': u'R2.r2.local'}}
+{
+    "ether1": {
+        "address": "192.168.56.110",
+        "address4": "192.168.56.110",
+        "age": "35s",
+        "identity": "R2.r2.local",
+        "interface": "ether1",
+        "interface-name": "GigabitEthernet0/0",
+        "mac-address": "0C:B4:F7:E7:50:00",
+        "platform": "Cisco",
+        "unpack": "none",
+        "version": "Cisco"
+    }
+}
 
 
 Running Configuration:
-# nov/05/2020 07:31:17 by RouterOS 6.47.7
+# nov/05/2020 22:38:44 by RouterOS 6.47.7
 # software id = 
 #
 #
@@ -68,6 +81,10 @@ Running Configuration:
 set [ find default=yes ] supplicant-identity=MikroTik
 /ip dhcp-client
 add disabled=no interface=ether1
+/system clock manual
+set time-zone=+06:30
+/system ntp client
+set enabled=yes primary-ntp=192.168.56.111
 /system scheduler
 add disabled=yes interval=30s name=config_restore on-event="/system scheduler \
     disable config_restore;system reset-configuration keep-users=yes no-defaul\
