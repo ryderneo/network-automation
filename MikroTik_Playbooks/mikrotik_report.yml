@@ -37,7 +37,7 @@
       with_items:
        - pwd
        - git add .
-       - git commit -m "Updates {{ansible_date_time.date}}" -a
+       - git commit -m "Updates {{ansible_date_time.date}} {{ansible_date_time.time}}" -a
        - git push orign
       args:
        chdir: ./git_remote
