@@ -1,13 +1,7 @@
 Hostname: MikroTik
 
 
-Model: 
-
-
-Serial Number: 
-
-
-IOS Version: 6.47.7 (stable)
+RouterOS Version: 6.47.7 (stable)
 
 
 Interfaces: {
@@ -61,11 +55,11 @@ Interfaces: {
 
 
 CDP Neighbors:
-{u'ether1': {u'interface-name': u'GigabitEthernet0/0', u'age': u'17s', u'address4': u'192.168.56.110', u'platform': u'Cisco', u'version': u'Cisco', u'address': u'192.168.56.110', u'interface': u'ether1', u'unpack': u'none', u'mac-address': u'0C:B4:F7:E7:50:00', u'identity': u'R2.r2.local'}}
+{u'ether1': {u'interface-name': u'GigabitEthernet0/0', u'age': u'40s', u'address4': u'192.168.56.110', u'platform': u'Cisco', u'version': u'Cisco', u'address': u'192.168.56.110', u'interface': u'ether1', u'unpack': u'none', u'mac-address': u'0C:B4:F7:E7:50:00', u'identity': u'R2.r2.local'}}
 
 
 Running Configuration:
-# nov/05/2020 05:50:15 by RouterOS 6.47.7
+# nov/05/2020 07:31:17 by RouterOS 6.47.7
 # software id = 
 #
 #
