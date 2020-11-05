@@ -2,8 +2,10 @@
   hosts: mikrotik
   connection: network_cli
   gather_facts: no
-
   tasks:
+    - name: Gather Engine Facts
+      setup:
+      delegate_to: localhost
     - name: Generate RSC backup by {{ inventory_hostname }}
       routeros_command:
         commands: export file={{ inventory_hostname }}
@@ -20,3 +22,22 @@
     - name: Remove the local  backup file generated
       routeros_command:
         commands: file remove {{ inventory_hostname }}.backup
+    - name: Create target directory
+      file: path=./git_remote/{{ inventory_hostname }} state=directory mode=0755
+    - name: copy config to git remote
+      copy:
+         src: "./backup/{{inventory_hostname}}.rsc"
+         dest: "./git_remote/{{ inventory_hostname }}/{{inventory_hostname}}-{{ansible_date_time.date}}-{{ansible_date_time.time}}.rsc"
+- name: Fully Sync changes into git_repo
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: Fully Sync Changes into git_repo
+      command: "{{ item }}"
+      with_items:
+       - pwd
+       - git add .
+       - git commit -m "Updates {{ansible_date_time.date}} {{ansible_date_time.time}}" -a
+       - git push orign
+      args:
+       chdir: ./git_remote

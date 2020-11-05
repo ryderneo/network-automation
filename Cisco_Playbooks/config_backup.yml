@@ -2,15 +2,23 @@
 - name: BACKUP ROUTER CONFIGURATIONS
   hosts: ios
   gather_facts: no
-  tasks:
+  tasks: 
+    - name: Gather Engine Facts
+      setup:
+      delegate_to: localhost
     - name: BACKUP THE CONFIG
       ios_config:
         backup: yes
       register: config_output
+    - name: debug
+      debug: 
+        var=config_output
     - name: RENAME BACKUP
       copy:
         src: "{{config_output.backup_path}}"
         dest: "./backup/{{inventory_hostname}}.config"
+    - name: delete the default backup file
+      command: rm -rf {{config_output.backup_path}}
     - name: REMOVE NON CONFIG LINES
       lineinfile:
         path: "./backup/{{inventory_hostname}}.config"
@@ -26,14 +34,17 @@
     - name: copy config to git remote
       copy:
          src: "./backup/{{inventory_hostname}}.config"	
-         dest: "./git_remote/{{ inventory_hostname }}/{{inventory_hostname}}.config"
-    - name: Fully Sync Changes into git_repo 
+         dest: "./git_remote/{{ inventory_hostname }}/{{inventory_hostname}}-{{ansible_date_time.date}}-{{ansible_date_time.time}}.config"
+- name: Fully Sync changes into git_repo
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: Fully Sync Changes into git_repo
       command: "{{ item }}"
       with_items:
        - pwd
        - git add .
-       - git commit -m "Updates just now" -a
-       - git push orign 
+       - git commit -m "Updates {{ansible_date_time.date}} {{ansible_date_time.time}}" -a
+       - git push orign
       args:
        chdir: ./git_remote
-      delegate_to: localhost
