@@ -14,7 +14,18 @@ IOS Image: flash0:/vios-adventerprisek9-m
 
 
 CDP Neighbors:
-{u'GigabitEthernet0/0': [{u'host': u'MikroTik', u'port': u'ether1'}, {u'host': u'R1.r1.local', u'port': u'GigabitEthernet0/0'}]}
+{
+    "GigabitEthernet0/0": [
+        {
+            "host": "MikroTik",
+            "port": "ether1"
+        },
+        {
+            "host": "R1.r1.local",
+            "port": "GigabitEthernet0/0"
+        }
+    ]
+}
 
 
 Running Configuration:
