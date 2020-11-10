@@ -1,6 +1,6 @@
 ---
 - name: Reach out to remote probes and troubleshoot routing
-  hosts: mikrotik
+  hosts: all
   gather_facts: no
   vars:
     ansible_command_timeout: 120
