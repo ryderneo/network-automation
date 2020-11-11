@@ -4,7 +4,7 @@
   gather_facts: no
   vars:
     ansible_command_timeout: 120
-    destIP: 1.1.1.1
+#   destIP: 1.1.1.1
     srcIP: 0.0.0.0
 
     send_mattermost: True
